@@ -1,0 +1,6 @@
+#include <stdio.h>
+#include "greet.h"
+
+int main() {
+  greet("Max");
+}
