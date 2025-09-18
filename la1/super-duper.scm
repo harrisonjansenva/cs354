@@ -1,6 +1,11 @@
 #!/usr/bin/env guile -s
 !#
 
+#| this is a simple implementation that will duplicate the 
+ elements of any non-atom or empty list provided.
+ @author: Harrison Jansen van Beek
+ Date: 17 September 2025
+|#
 (define (super-duper source count)
   (cond
     ((is-atom source) source)
