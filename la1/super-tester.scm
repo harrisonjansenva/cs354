@@ -1,6 +1,10 @@
 #!/usr/bin/env guile -s
 !#
-
+#|
+Test suite to ensure functionality of super-duper. 
+@author: Harrison Jansen van Beek
+Date: 17 September 2025
+|#
 (load "super-duper.scm")
 
 (define (run-test actual expected msg)
