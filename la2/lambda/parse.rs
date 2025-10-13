@@ -109,7 +109,15 @@ pub fn and<T1: 'static, T2: 'static>(p1: Parser<T1>, p2: Parser<T2>) -> Parser<(
 /// If `p2` succeeds, then `p2`'s return object is returned. Otherwise, None is
 /// returned.
 pub fn or<T1: 'static, T2: 'static>(p1: Parser<T1>, p2: Parser<T2>) -> Parser<Either<T1, T2>> {
-    todo!("Implement this combinator. See `and` for help.")
+    Box::new(move |input: &str| {
+        if let Some((r1, rest1)) = p1(input) {
+            return Some(((Either::Left(r1)), rest1))
+        }
+        if let Some((r2, rest2)) = p2(input) {
+            return Some(((Either::Right(r2)), rest2))
+        }
+        None
+    })
 }
 
 #[cfg(test)]
@@ -197,6 +205,36 @@ mod tests {
 
     #[test]
     fn test_or() {
-        todo!("Write this test!");
+        let parser = or(chars("foo".to_string()), chars("bar".to_string()));
+
+        // First parser matches "foo"
+        match parser("foo") {
+            Some((Either::Left(s), rest)) => {
+                assert_eq!(s, "foo".to_string());
+                assert_eq!(rest, "");
+            }
+            _ => panic!("parser did not match 'foo'"),
+        }
+
+        // First parser matches partially
+        match parser("foobar") {
+            Some((Either::Left(s), rest)) => {
+                assert_eq!(s, "foo".to_string());
+                assert_eq!(rest, "bar");
+            }
+            _ => panic!("parser did not match 'foobar'"),
+        }
+
+        // Second parser matches "bar"
+        match parser("barfoo") {
+            Some((Either::Right(s), rest)) => {
+                assert_eq!(s, "bar".to_string());
+                assert_eq!(rest, "foo");
+            }
+            _ => panic!("parser did not match 'barfoo'"),
+        }
+
+        // Neither parser matches
+        assert!(parser("buzzbuzz").is_none());
     }
 }

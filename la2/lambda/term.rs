@@ -128,7 +128,25 @@ impl Term {
 
     /// Performs normal-order reduction.
     pub fn normal_order_reduction(&self) -> Term {
-        todo!("Implement this.")
+        match self {
+            Term::Var(name) => Term::Var(name.to_string()),
+            Term::Lambda(param, body) => Term::Lambda(param.clone(), body.clone()),
+            Term::Application(function, arg) => {
+                let reduced_f = function.normal_order_reduction();
+                match reduced_f {
+                    Term::Lambda(param, body) => {
+                        let arg_reference: &Term = &**arg;
+                        let substituted = body.perform_substitution(&param, arg_reference);
+                        substituted.normal_order_reduction()
+                    }
+                    other => {
+                        Term::Application(Box::new(other), Box::new(*arg.clone()))
+                    }
+
+                }
+            }
+        }
+
     }
 }
 
@@ -289,6 +307,14 @@ mod tests {
 
     #[test]
     fn test_normal_order_reduction() {
-        todo!("Write this test!");
+
+        let var = Term::Var("x".to_string());
+        let var_test = var.normal_order_reduction();
+        assert_eq!(format!("{}", var_test), "x");
+
+        let lambda = Term::Lambda("x".to_string(), Box::new(Term::Var("x".to_string())));
+        let lambda_test = lambda.normal_order_reduction();
+        assert!(format!("{}", lambda_test).starts_with("λx"));
+        assert!(format!("{}", lambda_test).contains(".x"));
     }
 }
