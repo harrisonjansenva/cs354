@@ -316,5 +316,47 @@ mod tests {
         let lambda_test = lambda.normal_order_reduction();
         assert!(format!("{}", lambda_test).starts_with("λx"));
         assert!(format!("{}", lambda_test).contains(".x"));
+
+        let simple_beta = Term::Application(
+            Box::new(Term::Lambda("x".to_string(), Box::new(Term::Var("x".to_string())))),
+            Box::new(Term::Var("y".to_string())),
+        );
+        assert_eq!(format!("{}", simple_beta.normal_order_reduction()), "y");
+
+        let closed_term = Term::Application(
+            Box::new(Term::Lambda("x".to_string(), Box::new(Term::Var("z".to_string())))),
+            Box::new(Term::Application(
+                Box::new(Term::Lambda("s".to_string(), Box::new(Term::Var("s".to_string())))),
+                Box::new(Term::Var("y".to_string())),
+            )),
+        );
+        assert_eq!(format!("{}", closed_term.normal_order_reduction()), "z");
+
+        let nested_reduction = Term::Application(
+            Box::new(Term::Lambda(
+                "x".to_string(),
+                Box::new(Term::Lambda(
+                    "y".to_string(),
+                    Box::new(Term::Var("x".to_string())),
+                )),
+            )),
+            Box::new(Term::Var("z".to_string())),
+        );
+        let nested_test = nested_reduction.normal_order_reduction();
+        assert!(format!("{}", nested_test).starts_with("λy"));
+        assert!(format!("{}", nested_test).contains(".z"));
+
+        let lambda_2 = Term::Lambda("y".to_string(), Box::new(Term::Var("x".to_string())));
+        let replacement = Term::Var("y".to_string());
+        let result = lambda_2.perform_substitution("x", &replacement);
+        assert!(format!("{}", result).starts_with("λy_"));
+        assert!(format!("{}", result).contains(".y"));
+
+        let application = Term::Application(
+            Box::new(Term::Var("f".to_string())),
+            Box::new(Term::Var("x".to_string())),
+        );
+        let result = application.normal_order_reduction();
+        assert_eq!(format!("{}", result), "(f x)");
     }
 }
