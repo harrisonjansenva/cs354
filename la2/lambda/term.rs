@@ -308,21 +308,25 @@ mod tests {
     #[test]
     fn test_normal_order_reduction() {
 
+        //Tests a variable to make sure it doesn't try to reduce
         let var = Term::Var("x".to_string());
         let var_test = var.normal_order_reduction();
         assert_eq!(format!("{}", var_test), "x");
 
+        // tests to ensure the identity function returns itself
         let lambda = Term::Lambda("x".to_string(), Box::new(Term::Var("x".to_string())));
         let lambda_test = lambda.normal_order_reduction();
         assert!(format!("{}", lambda_test).starts_with("λx"));
         assert!(format!("{}", lambda_test).contains(".x"));
 
+        // tests a simple beta reduction (\x.x)y to make sure it properly reduces
         let simple_beta = Term::Application(
             Box::new(Term::Lambda("x".to_string(), Box::new(Term::Var("x".to_string())))),
             Box::new(Term::Var("y".to_string())),
         );
         assert_eq!(format!("{}", simple_beta.normal_order_reduction()), "y");
 
+        // test a term that is isolated from the other term (\x.z) (\s.s)y 
         let closed_term = Term::Application(
             Box::new(Term::Lambda("x".to_string(), Box::new(Term::Var("z".to_string())))),
             Box::new(Term::Application(
@@ -332,6 +336,7 @@ mod tests {
         );
         assert_eq!(format!("{}", closed_term.normal_order_reduction()), "z");
 
+        // test (\x.\y.x)z to ensure beta reduction happens properly
         let nested_reduction = Term::Application(
             Box::new(Term::Lambda(
                 "x".to_string(),
@@ -346,12 +351,14 @@ mod tests {
         assert!(format!("{}", nested_test).starts_with("λy"));
         assert!(format!("{}", nested_test).contains(".z"));
 
+        //test to ensure alpha reduction is properly happening and the variables aren't getting improperly bound.
         let lambda_2 = Term::Lambda("y".to_string(), Box::new(Term::Var("x".to_string())));
         let replacement = Term::Var("y".to_string());
         let result = lambda_2.perform_substitution("x", &replacement);
         assert!(format!("{}", result).starts_with("λy_"));
         assert!(format!("{}", result).contains(".y"));
 
+        //ensure an application with two variables does not try to be reduced any further.
         let application = Term::Application(
             Box::new(Term::Var("f".to_string())),
             Box::new(Term::Var("x".to_string())),
