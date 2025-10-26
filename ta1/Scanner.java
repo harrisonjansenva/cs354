@@ -56,6 +56,7 @@ public class Scanner {
 	}
 
 	private void initKeywords(Set<String> s) {
+		this.keywords = s;
 	}
 
 	// constructor:

@@ -13,26 +13,40 @@
 //   http://www.javatpoint.com/java-map
 // and elsewhere.
 
+import java.util.HashMap;
+
 public class Environment {
 
-	private String[] map = { "x" };
+	private HashMap<String, Integer> env = new HashMap<>(); 
 
 	public int put(String var, int val) {
+		env.put(var, val);
 		return val;
 	}
 
 	public int get(int pos, String var) throws EvalException {
-		return 0;
+		if (!env.containsKey(var)) {
+			throw new EvalException(pos, "Value does not exist in var lookup table");
+		}
+		else {
+			return env.get(var);
+		}
 	}
 
 	public String toC() {
 		String s = "";
 		String sep = " ";
-		for (String v : map) {
+		String equal = "=";
+		String newLine = ";\n";
+		for (String v : env.keySet()) {
+			s += "int";
 			s += sep + v;
-			sep = ",";
+			s += sep + equal;
+			s += sep + env.get(v);
+			s += newLine;
+
 		}
-		return s == "" ? "" : "int" + s + ";\nx=0;x=x;\n";
+		return s;
 	}
 
 }

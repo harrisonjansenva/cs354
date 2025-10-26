@@ -95,7 +95,12 @@ public class Parser {
 		NodeStmt stmt = new NodeStmt(assn);
 		return stmt;
 	}
-
+ /**
+  * 
+  * @param program
+  * @return
+  * @throws SyntaxException
+  */
 	public Node parse(String program) throws SyntaxException {
 		scanner = new Scanner(program);
 		scanner.next();
