@@ -1,17 +1,31 @@
 import java.io.*;
-
+/**
+ * This class takes our Java code an turns it into a C file that we can then excecute lightning fast!
+ * takes and writes all the files we need after eval
+ * @author: A Sadist
+ * Date: Sun Oct 26 17:49:38 MDT 2025
+ */
 public class Code {
-
+/**
+ * File Header for C files
+ */
 	private final String[] prologue={
 		"#include <stdio.h>",
 		"int main() {",
 	};
 
+	/**
+	 * Ending for C files, return and ending bracket
+	 */
 	private final String[] epilogue={
 		"return 0;",
 		"}",
 	};
-
+/**
+ * Takes and writes all variables in env and outputs result. 
+ * @param code to generate
+ * @param env which we have all our variables stored
+ */
 	public Code(String code, Environment env) {
 		String fn=System.getenv("Code");
 		if (fn==null)
