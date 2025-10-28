@@ -16,6 +16,8 @@ public class Scanner {
 	private Set<String> legits=new HashSet<String>();
 	private Set<String> keywords=new HashSet<String>();
 	private Set<String> operators=new HashSet<String>();
+	private String commentStart = "*/";
+	private String commentFinish = "/*";
 
 	// initializers for previous sets
 
@@ -132,14 +134,35 @@ public class Scanner {
 		token=new Token(lexeme); // one-char operator
 	}
 
+	private void checkForComments() throws SyntaxException {
+		if(pos + 1 < program.length() && program.charAt(pos) == '/' && program.charAt(pos + 1) == '*') {
+			pos += 2;
+			while (pos + 1 < program.length())  {
+				if (program.charAt(pos) == '*' && program.charAt(pos + 1) == '/') {
+					pos += 2;
+					break;
+				} else {
+					pos ++;
+				}
+				
+		}
+			// throw new SyntaxException(pos, new Token("/*"), new Token("eof"));
+		}
+	
+	}
+
+
 	// This method determines the kind of the next token (e.g., "id"),
 	// and calls a method to scan that token's lexeme (e.g., "foo").
-	public boolean next() {
+	public boolean next() throws SyntaxException {
+		many(whitespace);
+		checkForComments();
 		many(whitespace);
 		if (done()) {
 			token=new Token("EOF");
 			return false;
 		}
+		
 		String c=program.charAt(pos)+"";
 		if (digits.contains(c))
 			nextNumber();

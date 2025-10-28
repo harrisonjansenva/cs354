@@ -20,6 +20,7 @@ public class Parser {
 	}
 
 	private NodeMulop parseMulop() throws SyntaxException {
+		
 		if (curr().equals(new Token("*"))) {
 			match("*");
 			return new NodeMulop(pos(), "*");
@@ -44,6 +45,7 @@ public class Parser {
 	}
 
 	private NodeFact parseFact() throws SyntaxException {
+		// NodeAddop optAddOp = parseAddop();
 		if (curr().equals(new Token("("))) {
 			match("(");
 			NodeExpr expr = parseExpr();
