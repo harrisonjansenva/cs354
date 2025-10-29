@@ -43,14 +43,21 @@ public class Parser {
 		}
 		return null;
 	}
+	private NodeNegExpr parseNegExpr() throws SyntaxException {
+		if (curr().equals(new Token("-"))) {
+			match("-");
+			return new NodeNegExpr(pos(), "-");
+		}
+		return null;
+	}
 
 	private NodeFact parseFact() throws SyntaxException {
-		// NodeAddop optAddOp = parseAddop();
+		NodeNegExpr negExpr = parseNegExpr();
 		if (curr().equals(new Token("("))) {
 			match("(");
 			NodeExpr expr = parseExpr();
 			match(")");
-			return new NodeFactExpr(expr);
+			return new NodeFactExpr(negExpr, expr);
 		}
 		if (curr().equals(new Token("id"))) {
 			Token id = curr();
