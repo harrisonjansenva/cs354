@@ -3,6 +3,12 @@
 
 import java.util.*;
 
+/**
+ * The Scanner class is used to tokenize an input source program. It identifies tokens
+ * such as identifiers, numbers, keywords, operators, and manages white spaces and comments.
+ * The Scanner processes the input character by character and groups them into meaningful
+ * lexemes based on predefined sets such as digits, letters, operators, and keywords.
+ */
 public class Scanner {
 
 	private String program;		// source program being interpreted
@@ -21,31 +27,67 @@ public class Scanner {
 
 	// initializers for previous sets
 
+	/**
+	 * Populates the provided set with string representations of characters
+	 * ranging from the given lower bound to the given upper bound (inclusive).
+	 *
+	 * @param s the set to populate with characters
+	 * @param lo the lower bound character (inclusive)
+	 * @param hi the upper bound character (inclusive)
+	 */
 	private void fill(Set<String> s, char lo, char hi) {
 		for (char c=lo; c<=hi; c++)
 			s.add(c+"");
 	}
 
+	/**
+	 * Populates the provided set with common whitespace characters including a space, a newline, and a tab.
+	 *
+	 * @param s the set to populate with whitespace characters
+	 */
 	private void initWhitespace(Set<String> s) {
 		s.add(" ");
 		s.add("\n");
 		s.add("\t");
 	}
 
+	/**
+	 * Initializes the provided set with string representations of digit characters
+	 * ranging from '0' to '9' (inclusive).
+	 *
+	 * @param s the set to populate with digit characters
+	 */
 	private void initDigits(Set<String> s) {
 		fill(s,'0','9');
 	}
 
+	/**
+	 * Initializes the provided set with string representations of all uppercase
+	 * and lowercase alphabetic characters ('A' to 'Z' and 'a' to 'z').
+	 *
+	 * @param s the set to populate with alphabetic characters
+	 */
 	private void initLetters(Set<String> s) {
 		fill(s,'A','Z');
 		fill(s,'a','z');
 	}
 
+	/**
+	 * Populates the provided set with string representations of all characters
+	 * categorized as letters or digits.
+	 *
+	 * @param s the set to be populated with letters and digit characters
+	 */
 	private void initLegits(Set<String> s) {
 		s.addAll(letters);
 		s.addAll(digits);
 	}
 
+	/**
+	 * Initializes the provided set with a predefined set of operator symbols.
+	 *
+	 * @param s the set to populate with operator symbols such as '=', '+', '-', '*', '/', '(', ')', and ';'
+	 */
 	private void initOperators(Set<String> s) {
 		s.add("=");
 		s.add("+");
@@ -57,6 +99,11 @@ public class Scanner {
 		s.add(";");
 	}
 
+	/**
+	 * Initializes the set of keywords for the scanner.
+	 *
+	 * @param s the set to initialize with keywords
+	 */
 	private void initKeywords(Set<String> s) {
 		this.keywords = s;
 	}
@@ -105,12 +152,31 @@ public class Scanner {
 
 	// scan various kinds of lexeme
 
+	/**
+	 * Scans the next number token from the program and updates the token instance
+	 * to represent this new token.
+	 * Modifies:
+	 * - Updates the `token` field with a new `Token` object representing the number.
+	 * - Advances the `pos` field to the character position following the identified token.
+	 */
 	private void nextNumber() {
 		int old=pos;
+		many(digits);
+		if (program.charAt(pos) == '.') {
+			pos++;
+		}
 		many(digits);
 		token=new Token("num",program.substring(old,pos));
 	}
 
+	/**
+	 * Scans the next keyword or identifier token from the source program and updates the `token` field
+	 * to represent this new token. The method determines whether the scanned lexeme is a recognized
+	 * keyword from the set of `keywords` or an identifier.
+	 * Modifies:
+	 * - Updates the `token` field with a new `Token` object representing the keyword or identifier.
+	 * - Advances the `pos` field to the next position after the identified token.
+	 */
 	private void nextKwId() {
 		int old=pos;
 		many(letters);
@@ -118,7 +184,9 @@ public class Scanner {
 		String lexeme=program.substring(old,pos);
 		token=new Token((keywords.contains(lexeme) ? lexeme : "id"),lexeme);
 	}
-
+/**
+ * Creates a token of the next operator we are using
+ */
 	private void nextOp() {
 		int old=pos;
 		pos=old+2;
@@ -133,8 +201,11 @@ public class Scanner {
 		String lexeme=program.substring(old,pos);
 		token=new Token(lexeme); // one-char operator
 	}
-
-	private void checkForComments() throws SyntaxException {
+/**
+ * if comments are present, just advances position in program
+ * 
+ */
+	private void checkForComments() {
 		if(pos + 1 < program.length() && program.charAt(pos) == '/' && program.charAt(pos + 1) == '*') {
 			pos += 2;
 			while (pos + 1 < program.length())  {
@@ -185,13 +256,20 @@ public class Scanner {
 			throw new SyntaxException(pos,t,curr());
 		next();
 	}
-
+/**
+ * 
+ * @return the current token we are evaluating
+ * @throws SyntaxException if the token is null
+ */
 	public Token curr() throws SyntaxException {
 		if (token==null)
 			throw new SyntaxException(pos,new Token("ANY"),new Token("EMPTY"));
 		return token;
 	}
-
+/**
+ * 
+ * @return current position in program we are evaluating
+ */
 	public int pos() {
 		return pos;
 	}

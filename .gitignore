@@ -1,3 +1,4 @@
 .DS_Store
 ta1/*.class
-ta1/test/
+*.c
+*.i

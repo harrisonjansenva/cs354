@@ -6,19 +6,34 @@
 public class Parser {
 
 	private Scanner scanner;
-
+/**
+ * Ensure the token we are parsing it what is supposed to be
+ * @param s - the token to be evaluated
+ * @throws SyntaxException
+ */
 	private void match(String s) throws SyntaxException {
 		scanner.match(new Token(s));
 	}
-
+/**
+ * Find the current token we are evaluating
+ * @return current token
+ * @throws SyntaxException
+ */
 	private Token curr() throws SyntaxException {
 		return scanner.curr();
 	}
-
+/**
+ * Return position in the program we are at
+ * @return the posititon
+ */
 	private int pos() {
 		return scanner.pos();
 	}
-
+/**
+ * Determines which multiplicative op we want to use
+ * @return the NodeMulOp we are using
+ * @throws SyntaxException
+ */
 	private NodeMulop parseMulop() throws SyntaxException {
 		
 		if (curr().equals(new Token("*"))) {
@@ -31,7 +46,11 @@ public class Parser {
 		}
 		return null;
 	}
-
+/**
+ * Determine if we are adding or subtracting
+ * @return the op we are actually using
+ * @throws SyntaxException
+ */
 	private NodeAddop parseAddop() throws SyntaxException {
 		if (curr().equals(new Token("+"))) {
 			match("+");
@@ -43,6 +62,9 @@ public class Parser {
 		}
 		return null;
 	}
+	/** 
+	 * Parse to see if value of expression should be flipped to negative
+	*/
 	private NodeNegExpr parseNegExpr() throws SyntaxException {
 		if (curr().equals(new Token("-"))) {
 			match("-");
@@ -50,7 +72,11 @@ public class Parser {
 		}
 		return null;
 	}
-
+/**
+ * Parse a fact, where that be an identifier, a number, or another expression in parenthesis
+ * @return the parsed fact
+ * @throws SyntaxException
+ */
 	private NodeFact parseFact() throws SyntaxException {
 		NodeNegExpr negExpr = parseNegExpr();
 		if (curr().equals(new Token("("))) {
@@ -68,7 +94,11 @@ public class Parser {
 		match("num");
 		return new NodeFactNum(num.lex());
 	}
-
+/**
+ * Parse a term, whether that be a fact, multop, and term, or just a fact
+ * @return the parsed term
+ * @throws SyntaxException
+ */
 	private NodeTerm parseTerm() throws SyntaxException {
 		NodeFact fact = parseFact();
 		NodeMulop mulop = parseMulop();
@@ -78,7 +108,11 @@ public class Parser {
 		term.append(new NodeTerm(fact, mulop, null));
 		return term;
 	}
-
+/**
+ * Parse an expression into either a term, addOp, and expression, or just a term
+ * @return the parsed expression
+ * @throws SyntaxException
+ */
 	private NodeExpr parseExpr() throws SyntaxException {
 		NodeTerm term = parseTerm();
 		NodeAddop addop = parseAddop();
@@ -89,6 +123,11 @@ public class Parser {
 		return expr;
 	}
 
+	/**
+	 * Parse an assignment binding (an identifier, an equals sign, and an expression)
+	 * @return the parsed assignment
+	 * @throws SyntaxException
+	 */
 	private NodeAssn parseAssn() throws SyntaxException {
 		Token id = curr();
 		match("id");
@@ -97,7 +136,9 @@ public class Parser {
 		NodeAssn assn = new NodeAssn(id.lex(), expr);
 		return assn;
 	}
-
+/** 
+ * Parse out the statement into an assignment and ensure we have a semicolon at the end
+*/
 	private NodeStmt parseStmt() throws SyntaxException {
 		NodeAssn assn = parseAssn();
 		match(";");
@@ -105,9 +146,9 @@ public class Parser {
 		return stmt;
 	}
  /**
-  * 
-  * @param program
-  * @return
+  * Return the parsed out program
+  * @param program that we want to parse
+  * @return all the parsedout pieces
   * @throws SyntaxException
   */
 	public Node parse(String program) throws SyntaxException {

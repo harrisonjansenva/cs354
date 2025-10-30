@@ -1,0 +1,4 @@
+test-comments/gen.c:5:5: warning: explicitly assigning value of variable of type 'double' to itself [-Wself-assign]
+    5 |   x = x;
+      |   ~ ^ ~
+1 warning generated.

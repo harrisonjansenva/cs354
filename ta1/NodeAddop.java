@@ -24,7 +24,7 @@ public class NodeAddop extends Node {
 	 * @return operation completed
 	 * @throws EvalException if somehow we were to pull an incorrect addop
 	 */
-	public int op(int o1, int o2) throws EvalException {
+	public double op(double o1, double o2) throws EvalException {
 		if (addop.equals("+"))
 			return o1+o2;
 		if (addop.equals("-"))

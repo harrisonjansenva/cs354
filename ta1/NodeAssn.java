@@ -21,7 +21,7 @@ public class NodeAssn extends Node {
  * Evaluate the semantics of the assn we are holding
  * @return the value eventually bound to this assignment
  */
-	public int eval(Environment env) throws EvalException {
+	public double eval(Environment env) throws EvalException {
 		return env.put(id, new NodeWr(expr).eval(env));
 	}
 /**

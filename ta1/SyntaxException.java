@@ -1,3 +1,6 @@
+/**
+ * SyntaxException is thrown if we syntax that doesn't match.
+ */
 public class SyntaxException extends Exception {
 
 	private int pos;

@@ -13,7 +13,7 @@ public abstract class Node {
 	 * @return nothing
 	 * @throws EvalException -- impossible to evaluate
 	 */
-	public int eval(Environment env) throws EvalException {
+	public double eval(Environment env) throws EvalException {
 		throw new EvalException(pos,"cannot eval() node!");
 	}
 

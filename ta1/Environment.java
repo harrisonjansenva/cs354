@@ -17,14 +17,14 @@ import java.util.HashMap;
 
 public class Environment {
 
-	private HashMap<String, Integer> env = new HashMap<>(); 
+	private HashMap<String, Double> env = new HashMap<>(); 
 /**
  * Add a variable to our var lookup table
  * @param var name of var to add
  * @param val - value of the variable to be output
  * @return the variable, indicating sucessful put
  */
-	public int put(String var, int val) {
+	public double put(String var, double val) {
 		env.put(var, val);
 		return val;
 	}
@@ -35,7 +35,7 @@ public class Environment {
  * @return value of the token or var we are looking for
  * @throws EvalException if that token is not in our var lookup table
  */
-	public int get(int pos, String var) throws EvalException {
+	public double get(int pos, String var) throws EvalException {
 		if (!env.containsKey(var)) {
 			throw new EvalException(pos, "Value does not exist in var lookup table");
 		}
@@ -54,7 +54,7 @@ public class Environment {
 			s += sep + v;
 			sep = ",";
 		}
-		return s == "" ? "" : "int" + s + ";\nx=0;x=x;\n";
+		return s == "" ? "" : "double" + s + ";\nx=0;x=x;\n";
 	}
 
 

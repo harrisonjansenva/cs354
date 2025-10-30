@@ -15,11 +15,20 @@ public class Token {
 	public Token(String token) {
 		this(token,token);
 	}
-
+/**
+ * @return the token being evaluated
+ */
 	public String tok() { return token; }
-
+/**
+ * 
+ * @return the lexical value of the token we are evaluating
+ */
 	public String lex() { return lexeme; }
-
+/**
+ * 
+ * @param t to ensure the token we are evaluating is the one we are looking at
+ * @return true if the same token
+ */
 	public boolean equals(Token t) {
 		return token.equals(t.token);
 	}

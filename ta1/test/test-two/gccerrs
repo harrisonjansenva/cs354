@@ -1,0 +1,7 @@
+test-two/gen.c:5:5: warning: explicitly assigning value of variable of type 'double' to itself [-Wself-assign]
+    5 |   x = x;
+      |   ~ ^ ~
+test-two/gen.c:3:13: warning: variable 'y' set but not used [-Wunused-but-set-variable]
+    3 |   double x, y;
+      |             ^
+2 warnings generated.
