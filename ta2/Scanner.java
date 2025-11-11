@@ -96,18 +96,13 @@ public class Scanner {
 		s.add("(");
 		s.add(")");
 		s.add(";");
-	}
-
-	private void initRelationalOperators(Set<String> s) {
 		s.add("<");
 		s.add("<=");
 		s.add(">");
 		s.add(">=");
 		s.add("<>");
 		s.add("==");
-		
 	}
-
 	/**
 	 * Initializes the set of keywords for the scanner.
 	 *
@@ -130,7 +125,6 @@ public class Scanner {
 		initLegits(legits);
 		initKeywords(keywords);
 		initOperators(operators);
-		initRelationalOperators(relOperators);
 	}
 
 	// handy string-processing methods

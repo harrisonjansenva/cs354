@@ -139,10 +139,10 @@ public class Parser {
 /** 
  * Parse out the statement into an assignment and ensure we have a semicolon at the end
 */
-	private NodeStmt parseStmt() throws SyntaxException {
+	private NodeStmtAssn parseStmt() throws SyntaxException {
 		NodeAssn assn = parseAssn();
 		match(";");
-		NodeStmt stmt = new NodeStmt(assn);
+		NodeStmtAssn stmt = new NodeStmtAssn(assn);
 		return stmt;
 	}
  /**
@@ -154,7 +154,7 @@ public class Parser {
 	public Node parse(String program) throws SyntaxException {
 		scanner = new Scanner(program);
 		scanner.next();
-		NodeStmt stmt = parseStmt();
+		NodeStmtAssn stmt = parseStmt();
 		match("EOF");
 		return stmt;
 	}
