@@ -8,14 +8,14 @@ to_minutes(time(12, Min, am), Total) :-
 	Total is Min.
 
 to_minutes(time(H, Min, am), Total) :- 
-	H \= 12,
+	H \== 12,
 	Total is (H * 60) + Min.
 
 to_minutes(time(12, Min, pm ), Total) :-
 	Total is (12 * 60) + Min.
 
 to_minutes(time(H, Min, pm), Total) :-
-	H \= 12,
+	H \== 12,
 	Total is (H + 12) * 60 + Min.
 
 lte(Time1, Time2) :-
