@@ -1,7 +1,7 @@
 /**
  * Class that holds a statement binding
  */
-public class NodeStmtAssn extends Node {
+public class NodeStmtAssn extends NodeStmtVal {
 
 	private NodeAssn assn;
 /**

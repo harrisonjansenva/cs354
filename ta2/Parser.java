@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 // This class is a recursive-descent parser,
 // modeled after the programming language's grammar.
 // It constructs and has-a Scanner for the program
@@ -136,15 +139,49 @@ public class Parser {
 		NodeAssn assn = new NodeAssn(id.lex(), expr);
 		return assn;
 	}
+	private NodeStmtVal parseRdStmt() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+	private NodeStmtRd parseWrStmt() {
+		throw new UnsupportedOperationException();
+	}
+	
+
 /** 
  * Parse out the statement into an assignment and ensure we have a semicolon at the end
 */
-	private NodeStmtAssn parseStmt() throws SyntaxException {
-		NodeAssn assn = parseAssn();
-		match(";");
-		NodeStmtAssn stmt = new NodeStmtAssn(assn);
-		return stmt;
+	private NodeStmtVal parseStmt() throws SyntaxException {
+		// NodeAssn assn = parseAssn();
+		// match(";");
+		// NodeStmtAssn stmt = new NodeStmtAssn(assn);
+		// return stmt;
+		NodeStmtVal stmt; 
+
+		if (curr() == new Token("rd")) {
+			stmt = parseRdStmt();
+			match(";");
+		}
+		switch (curr()) {
+			case (new Token("rd")):
+			
+			break;
+
+			
+
+		}
 	}
+
+	private NodeBlock parseBlock() throws SyntaxException {
+		ArrayList<NodeStmtVal> stmnts = new ArrayList<>();
+		while (!scanner.done()) {
+			NodeStmtVal stmnt = parseStmt();
+			match(";");
+			stmnts.add(stmnt);
+		}
+		return new NodeBlock(stmnts);
+	}
+
  /**
   * Return the parsed out program
   * @param program that we want to parse
@@ -154,9 +191,12 @@ public class Parser {
 	public Node parse(String program) throws SyntaxException {
 		scanner = new Scanner(program);
 		scanner.next();
+		NodeBlock prog = parseBlock();
 		NodeStmtAssn stmt = parseStmt();
 		match("EOF");
 		return stmt;
 	}
+
+    
 
 }

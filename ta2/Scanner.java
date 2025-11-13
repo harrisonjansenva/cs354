@@ -110,6 +110,13 @@ public class Scanner {
 	 */
 	private void initKeywords(Set<String> s) {
 		this.keywords = s;
+		keywords.add("if");
+		keywords.add("else");
+		keywords.add("then");
+		keywords.add("while");
+		keywords.add("do");
+		keywords.add("begin");
+		keywords.add("end");
 	}
 
 	// constructor:
