@@ -65,6 +65,37 @@ public class Parser {
 		}
 		return null;
 	}
+
+	private NodeRelop parseRelop() throws SyntaxException {
+		if (curr().equals(new Token("<"))) {
+			match("<");
+			return new NodeRelop(pos(), "<");
+
+		} else if (curr().equals(new Token( "<="))) {
+			match("<=");
+			return new NodeRelop(pos(), "<=");
+
+		} else if (curr().equals(new Token(">"))) {
+			match(">");
+			return new NodeRelop(pos(), ">");
+
+		} else if (curr().equals(new Token(">="))) {
+			match(">=");
+			return new NodeRelop(pos(), ">=");
+
+		} else if (curr().equals(new Token("<>"))) {
+			match("<>");
+			return new NodeRelop(pos(), "<>");
+
+		} else if (curr().equals(new Token("=="))) {
+			match("==");
+			return new NodeRelop(pos(), "==");
+
+		}
+		return null;
+
+	}
+
 	/** 
 	 * Parse to see if value of expression should be flipped to negative
 	*/
@@ -146,12 +177,53 @@ public class Parser {
 	private NodeStmtRd parseWrStmt() {
 		throw new UnsupportedOperationException();
 	}
+
+	private NodeBoolExpr parseBoolExpr() throws SyntaxException {
+		NodeExpr expr1 = parseExpr();
+		NodeRelop op = parseRelop();
+		NodeExpr expr2 = parseExpr();
+		
+		return new NodeBoolExpr(expr1, op, expr2);
+	}
+
+	private NodeStmtWhile parseWhileStmt() throws SyntaxException {
+		NodeBoolExpr boolExpr = parseBoolExpr();
+		match("do");
+		NodeStmt stmt = parseStmt();
+
+		return new NodeStmtWhile(boolExpr, stmt);
+		
+	}
+
+	private NodeStmtIf parseIfStmt() throws SyntaxException {
+		NodeBoolExpr boolExpr = parseBoolExpr();
+		match("then");
+		NodeStmt stmt = parseStmt();
+		if (curr() == new Token("else")) {
+			match("else");
+			NodeStmt elseBlock = parseStmt();
+			return new NodeStmtIfElse(boolExpr, stmt, elseBlock);
+		}
+		return new NodeStmtIf(boolExpr, stmt);
+	}
+
+	private NodeStmtBlock parseStmtBlock() throws SyntaxException {
+		ArrayList<NodeStmt> blockStmts = new ArrayList<>();
+		while (curr() != new Token("end")) {
+			NodeStmt stmt = parseStmt();
+			match(";");
+			blockStmts.add(stmt);
+		}
+		match("end");
+		return new NodeStmtBlock(blockStmts);
+	}
+
 	
 
 /** 
  * Parse out the statement into an assignment and ensure we have a semicolon at the end
 */
-	private NodeStmtVal parseStmt() throws SyntaxException {
+	private NodeStmt parseStmt() throws SyntaxException {
 		// NodeAssn assn = parseAssn();
 		// match(";");
 		// NodeStmtAssn stmt = new NodeStmtAssn(assn);
@@ -161,21 +233,28 @@ public class Parser {
 		if (curr() == new Token("rd")) {
 			stmt = parseRdStmt();
 			match(";");
+		} else if (curr() == new Token("wr")) {
+			stmt = parseWrStmt();
+			match(";");
+		} else if (curr() == new Token("if")) {
+			match("if");
+			stmt = parseIfStmt();
+		} else if (curr() == new Token("while")) {
+			match("while");
+			stmt = parseWhileStmt();
+		} else if (curr() == new Token("begin")) {
+			match("begin");
+			stmt = parseStmtBlock();
+		} else {
+			stmt = parseAssn();
 		}
-		switch (curr()) {
-			case (new Token("rd")):
-			
-			break;
-
-			
-
-		}
+		return new NodeStmt(stmt);
 	}
 
 	private NodeBlock parseBlock() throws SyntaxException {
-		ArrayList<NodeStmtVal> stmnts = new ArrayList<>();
+		ArrayList<NodeStmt> stmnts = new ArrayList<>();
 		while (!scanner.done()) {
-			NodeStmtVal stmnt = parseStmt();
+			NodeStmt stmnt = parseStmt();
 			match(";");
 			stmnts.add(stmnt);
 		}
@@ -192,9 +271,8 @@ public class Parser {
 		scanner = new Scanner(program);
 		scanner.next();
 		NodeBlock prog = parseBlock();
-		NodeStmtAssn stmt = parseStmt();
 		match("EOF");
-		return stmt;
+		return prog;
 	}
 
     

@@ -4,7 +4,7 @@
  * @author: a sadist
  * Date: Sun Oct 26 18:30:15 MDT 2025
  */
-public class NodeAssn extends Node {
+public class NodeAssn extends NodeStmtVal {
 
 	private String id;
 	private NodeExpr expr;

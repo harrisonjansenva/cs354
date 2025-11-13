@@ -3,24 +3,24 @@
  */
 public class NodeStmt extends Node {
 
-	private NodeAssn assn;
+	private NodeStmtVal stmt;
 /**
  * constructor to hold binding to an assignment
  * @param assn bound
  */
-	public NodeStmt(NodeAssn assn) {
-		this.assn=assn;
+	public NodeStmt(NodeStmtVal stmt) {
+		this.stmt = stmt;
 	}
 /**
  * Evaluate the binding held at this statement
  */
 	public double eval(Environment env) throws EvalException {
-		return assn.eval(env);
+		return stmt.eval(env);
 	}
 
 	/**
 	 * generate code to create proper binding semantics
 	 */
-	public String code() { return assn.code(); }
+	public String code() { return stmt.code(); }
 
 }

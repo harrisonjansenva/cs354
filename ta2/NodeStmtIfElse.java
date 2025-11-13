@@ -1,3 +1,19 @@
-public class NodeStmtIfElse extends Node {
+public class NodeStmtIfElse extends NodeStmtIf {
+
+    public NodeStmtIfElse(NodeBoolExpr boolExpr, NodeStmt stmt, NodeStmt elseBlock) {
+        //TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public double eval(Environment env) throws EvalException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eval'");
+    }
+
+    @Override
+    public String code() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'code'");
+    }
     
 }
