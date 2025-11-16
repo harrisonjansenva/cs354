@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class NodeBlock extends Node {
+public class NodeBlock extends NodeStmtVal {
 
     private ArrayList<NodeStmt> stmts;
 
@@ -21,6 +21,17 @@ public class NodeBlock extends Node {
         }
         return lastStmtReturn;
 
+
+    }
+    @Override
+    public String code() {
+
+        StringBuilder sb = new StringBuilder();
+        for (NodeStmt stmt: stmts) {
+            sb.append(stmt.code());
+        }
+
+        return sb.toString();
 
     }
 

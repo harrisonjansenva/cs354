@@ -1,19 +1,20 @@
 public class NodeStmtIf extends NodeStmtVal {
 
+    protected NodeBoolExpr boolExpr;
+    protected NodeStmt stmt;
+
     public NodeStmtIf(NodeBoolExpr boolExpr, NodeStmt stmt) {
-        //TODO Auto-generated constructor stub
+        this.boolExpr = boolExpr;
+        this.stmt = stmt;
     }
 
     @Override
     public double eval(Environment env) throws EvalException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eval'");
+        return boolExpr.eval(env) == 1.0 ? stmt.eval(env): 0.0;
     }
 
     @Override
     public String code() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'code'");
+        return "if (" + boolExpr.code() + ") {\n" + stmt + "\n}";
     }
-    
 }

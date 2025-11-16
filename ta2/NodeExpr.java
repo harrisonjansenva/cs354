@@ -25,7 +25,9 @@ public class NodeExpr extends Node {
 		this.expr = expr;
 	}
 
-	/**
+	
+
+    /**
 	 * puts together an expr's structure. if this is a term, we set it up as part of
 	 * the expr structure, otherwise we append the incoming expr to this one
 	 * 

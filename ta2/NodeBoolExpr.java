@@ -18,7 +18,7 @@ public class NodeBoolExpr extends NodeStmtVal {
 
     @Override
     public String code() {
-       return "(" + expr1 + " " + relop + " " + expr2 + ")";
+       return "(" + expr1 + " " + relop.code() + " " + expr2 + ")";
     }
     
 }

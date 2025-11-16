@@ -170,12 +170,19 @@ public class Parser {
 		NodeAssn assn = new NodeAssn(id.lex(), expr);
 		return assn;
 	}
-	private NodeStmtVal parseRdStmt() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	private NodeStmtRd parseRdStmt() throws SyntaxException {
+		Token id = curr();
+		
+		match("id");
 
-	private NodeStmtRd parseWrStmt() {
-		throw new UnsupportedOperationException();
+		return new NodeStmtRd(pos(), id.lex());
+		
+	}
+       
+
+	private NodeStmtWr parseWrStmt() throws SyntaxException {
+		NodeExpr exprToWrite = parseExpr();
+		return new NodeStmtWr(pos(), exprToWrite);
 	}
 
 	private NodeBoolExpr parseBoolExpr() throws SyntaxException {
@@ -207,7 +214,7 @@ public class Parser {
 		return new NodeStmtIf(boolExpr, stmt);
 	}
 
-	private NodeStmtBlock parseStmtBlock() throws SyntaxException {
+	private NodeBlock parseStmtBlock() throws SyntaxException {
 		ArrayList<NodeStmt> blockStmts = new ArrayList<>();
 		while (curr() != new Token("end")) {
 			NodeStmt stmt = parseStmt();
@@ -215,7 +222,7 @@ public class Parser {
 			blockStmts.add(stmt);
 		}
 		match("end");
-		return new NodeStmtBlock(blockStmts);
+		return new NodeBlock(blockStmts);
 	}
 
 	

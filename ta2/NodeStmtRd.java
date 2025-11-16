@@ -1,16 +1,28 @@
+import java.util.Scanner;
 public class NodeStmtRd extends NodeStmtVal {
-    private NodeFactId id;
+    
+    private int pos;
+    private String lex;
+
+    public NodeStmtRd(int pos, String lex) {
+        this.pos = pos;
+        this.lex = lex;
+    }
 
     @Override
     public double eval(Environment env) throws EvalException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eval'");
+        Scanner scnr = new Scanner(System.in);
+        double input = scnr.nextDouble();
+        scnr.close();
+        return env.put(lex, input);
+        
     }
 
     @Override
     public String code() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'code'");
+       StringBuilder sb = new StringBuilder();
+       sb.append("scanf(%f, &)").append(lex).append(");");
+       return sb.toString();
     }
     
 }
