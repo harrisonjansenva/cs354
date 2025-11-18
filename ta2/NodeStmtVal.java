@@ -4,15 +4,17 @@
 public abstract class NodeStmtVal extends Node {
 
 
-
-/**
- * Evaluate the binding held at this statement
- */
+ /**
+     * Evaluate the write statement by evaluating the expression and printing it
+     * to standard output
+     * @return the value that was written
+     */
 	public abstract double eval(Environment env) throws EvalException;
 
 	/**
-	 * generate code to create proper binding semantics
-	 */
+ * Generate the C code for the while statement
+ * @return the string containing the C code
+ */
 	public abstract String code();
 
 }

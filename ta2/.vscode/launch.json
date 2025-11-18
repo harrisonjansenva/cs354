@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "Main",
             "projectName": "ta2_ce5aef39",
-            "args": "\"x = 2; y = x * 2; if x * y == 8 then begin x = 3; wr x * y end\""
+            "args": "\"x = 0; while x < 20 do begin wr x; x = x + 1 end \""
         },
         {
             "type": "java",

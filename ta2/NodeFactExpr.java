@@ -10,9 +10,8 @@ public class NodeFactExpr extends NodeFact {
  * @param negExpr - optional to see if value should be flipped after evaluated
  * @param expr - value to be evaluated
  */
-	public NodeFactExpr(NodeNegExpr negExpr, NodeExpr expr) {
+	public NodeFactExpr(NodeExpr expr) {
 		this.expr=expr;
-		this.negExpr = negExpr;
 	}
 /**
  * Determine semantics of our Fact-Expr. if negative operator is present, invert value determined from evaluating expr.
@@ -23,6 +22,6 @@ public class NodeFactExpr extends NodeFact {
 /**
  * Return code to generate appropriate C code.
  */
-	public String code() { return (negExpr == null ? "": negExpr.code()) + "(" + expr.code() + ")"; }
+	public String code() { return expr.code(); }
 
 }

@@ -22,7 +22,7 @@ public class NodeAssn extends NodeStmtVal {
  * @return the value eventually bound to this assignment
  */
 	public double eval(Environment env) throws EvalException {
-		return env.put(id, new NodeWr(expr).eval(env));
+		return env.put(id, expr.eval(env));
 	}
 /**
  * Generate the code to show the process of how this gets evaluated.

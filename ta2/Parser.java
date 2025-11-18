@@ -96,28 +96,22 @@ public class Parser {
 
 	}
 
-	/** 
-	 * Parse to see if value of expression should be flipped to negative
-	*/
-	private NodeNegExpr parseNegExpr() throws SyntaxException {
-		if (curr().equals(new Token("-"))) {
-			match("-");
-			return new NodeNegExpr(pos(), "-");
-		}
-		return null;
-	}
+	
 /**
  * Parse a fact, where that be an identifier, a number, or another expression in parenthesis
  * @return the parsed fact
  * @throws SyntaxException
  */
 	private NodeFact parseFact() throws SyntaxException {
-		NodeNegExpr negExpr = parseNegExpr();
+		if (curr().equals(new Token("-"))) {
+			match("-");
+			return new NodeNegExpr(parseExpr());
+		}
 		if (curr().equals(new Token("("))) {
 			match("(");
 			NodeExpr expr = parseExpr();
 			match(")");
-			return new NodeFactExpr(negExpr, expr);
+			return new NodeFactExpr(expr);
 		}
 		if (curr().equals(new Token("id"))) {
 			Token id = curr();
@@ -213,17 +207,6 @@ public class Parser {
 		}
 		return new NodeStmtIf(boolExpr, stmt);
 	}
-
-	private NodeBlock parseStmtBlock() throws SyntaxException {
-		ArrayList<NodeStmt> blockStmts = new ArrayList<>();
-		while (curr() != new Token("end")) {
-			NodeStmt stmt = parseStmt();
-			blockStmts.add(stmt);
-		}
-		match("end");
-		return new NodeBlock(blockStmts);
-	}
-
 	
 
 /** 
