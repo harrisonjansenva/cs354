@@ -22,6 +22,11 @@ public class NodeAssn extends NodeStmtVal {
  * @return the value eventually bound to this assignment
  */
 	public double eval(Environment env) throws EvalException {
+		double i = expr.eval(env);
+			if (i == Math.floor(i))
+			System.out.printf("%.0f%n", i);
+		else
+			System.out.printf("%g%n", i);
 		return env.put(id, expr.eval(env));
 	}
 /**
@@ -29,7 +34,8 @@ public class NodeAssn extends NodeStmtVal {
  * @return the string containing the C code
  */
 	public String code() {
-		return id + "=" + expr.code() + ";" + new NodeWr(expr).code();
+		return id + "=" + expr.code() + ";"
+         + "printf(\"%g\\n\",(double)(" + id + "));";
 	}
 
 }
