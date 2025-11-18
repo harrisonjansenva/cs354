@@ -30,7 +30,7 @@ public class NodeStmtIfElse extends NodeStmtIf {
     public String code() {
         StringBuilder sb = new StringBuilder();
         sb.append("if (").append(boolExpr.code()).append(") {\n");
-        sb.append(stmt);
+        sb.append(stmt.code());
         sb.append("}\n else {").append(elseBlock.code()).append('}');
 
         return sb.toString();

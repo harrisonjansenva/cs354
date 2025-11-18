@@ -3,4 +3,4 @@ x = 0;
 if x == -1 then 
 wr x
 else
- wr -1
+ wr -(1)
