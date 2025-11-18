@@ -18,10 +18,9 @@ public class NodeStmtWr extends NodeStmtVal {
 		return i;
     }
 
-    @Override
-    public String code() {
-        StringBuilder sb = new StringBuilder();
-        return sb.append("printf(%f, &").append(exprToWrite.code()).append(");").toString();
-    }
+   @Override
+public String code() {
+    return "printf(\"%g\\n\", (double)(" + exprToWrite.code() + "));";
+}
     
 }

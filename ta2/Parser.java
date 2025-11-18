@@ -206,7 +206,7 @@ public class Parser {
 		NodeBoolExpr boolExpr = parseBoolExpr();
 		match("then");
 		NodeStmt stmt = parseStmt();
-		if (curr() == new Token("else")) {
+		if (curr().equals(new Token("else"))) {
 			match("else");
 			NodeStmt elseBlock = parseStmt();
 			return new NodeStmtIfElse(boolExpr, stmt, elseBlock);
@@ -237,19 +237,17 @@ public class Parser {
 		// return stmt;
 		NodeStmtVal stmt; 
 
-		if (curr() == new Token("rd")) {
+		if (curr().equals( new Token("rd"))) {
 			stmt = parseRdStmt();
-			match(";");
-		} else if (curr() == new Token("wr")) {
+		} else if (curr().equals( new Token("wr"))) {
 			stmt = parseWrStmt();
-			match(";");
-		} else if (curr() == new Token("if")) {
+		} else if (curr().equals(new Token("if"))) {
 			match("if");
 			stmt = parseIfStmt();
-		} else if (curr() == new Token("while")) {
+		} else if (curr().equals(new Token("while"))) {
 			match("while");
 			stmt = parseWhileStmt();
-		} else if (curr() == new Token("begin")) {
+		} else if (curr().equals( new Token("begin"))) {
 			match("begin");
 			stmt = parseStmtBlock();
 		} else {
@@ -262,8 +260,12 @@ public class Parser {
 		ArrayList<NodeStmt> stmnts = new ArrayList<>();
 		while (!scanner.done()) {
 			NodeStmt stmnt = parseStmt();
-			match(";");
 			stmnts.add(stmnt);
+			if (curr().equals(new Token("EOF"))) {
+				break;
+			}
+			match(";");
+
 		}
 		return new NodeBlock(stmnts);
 	}

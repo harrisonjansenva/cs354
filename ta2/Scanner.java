@@ -117,6 +117,8 @@ public class Scanner {
 		keywords.add("do");
 		keywords.add("begin");
 		keywords.add("end");
+		keywords.add("rd");
+		keywords.add("wr");
 	}
 
 	// constructor:
