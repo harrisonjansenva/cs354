@@ -13,7 +13,6 @@ public class NodeStmtRd extends NodeStmtVal {
     public double eval(Environment env) throws EvalException {
         Scanner scnr = new Scanner(System.in);
         double input = scnr.nextDouble();
-        scnr.close();
         return env.put(lex, input);
         
     }

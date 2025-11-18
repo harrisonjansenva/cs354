@@ -20,7 +20,7 @@ public class NodeStmtWhile extends NodeStmtVal {
     @Override
     public String code() {
        StringBuilder sb = new StringBuilder();
-       sb.append("(while ").append(boolExpr.code()).append(") {\n");
+       sb.append("while ").append(boolExpr.code()).append(" {\n");
        sb.append(stmt.code()).append("\n}\n");
 
        return sb.toString();
