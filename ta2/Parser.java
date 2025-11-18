@@ -218,7 +218,6 @@ public class Parser {
 		ArrayList<NodeStmt> blockStmts = new ArrayList<>();
 		while (curr() != new Token("end")) {
 			NodeStmt stmt = parseStmt();
-			match(";");
 			blockStmts.add(stmt);
 		}
 		match("end");
@@ -238,8 +237,10 @@ public class Parser {
 		NodeStmtVal stmt; 
 
 		if (curr().equals( new Token("rd"))) {
+			match("rd");
 			stmt = parseRdStmt();
 		} else if (curr().equals( new Token("wr"))) {
+			match("wr");
 			stmt = parseWrStmt();
 		} else if (curr().equals(new Token("if"))) {
 			match("if");
@@ -249,7 +250,8 @@ public class Parser {
 			stmt = parseWhileStmt();
 		} else if (curr().equals( new Token("begin"))) {
 			match("begin");
-			stmt = parseStmtBlock();
+			stmt = parseBlock();
+			match("end");
 		} else {
 			stmt = parseAssn();
 		}
@@ -261,7 +263,7 @@ public class Parser {
 		while (!scanner.done()) {
 			NodeStmt stmnt = parseStmt();
 			stmnts.add(stmnt);
-			if (curr().equals(new Token("EOF"))) {
+			if (curr().equals(new Token("EOF")) || curr().equals(new Token("end"))) {
 				break;
 			}
 			match(";");

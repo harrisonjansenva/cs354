@@ -15,6 +15,6 @@ public class NodeStmtIf extends NodeStmtVal {
 
     @Override
     public String code() {
-        return "if (" + boolExpr.code() + ") {\n" + stmt + "\n}";
+        return "if (" + boolExpr.code() + ") {\n" + stmt.code() + "\n}";
     }
 }
