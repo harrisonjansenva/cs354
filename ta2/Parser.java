@@ -65,7 +65,11 @@ public class Parser {
 		}
 		return null;
 	}
-
+/**
+ * Parse a relational operator
+ * @return the relational operator
+ * @throws SyntaxException
+ */
 	private NodeRelop parseRelop() throws SyntaxException {
 		if (curr().equals(new Token("<"))) {
 			match("<");
@@ -164,6 +168,11 @@ public class Parser {
 		NodeAssn assn = new NodeAssn(id.lex(), expr);
 		return assn;
 	}
+	/**
+	 * parse a read statement
+	 * @return the parsed read statement
+	 * @throws SyntaxException
+	 */
 	private NodeStmtRd parseRdStmt() throws SyntaxException {
 		Token id = curr();
 		
@@ -173,12 +182,20 @@ public class Parser {
 		
 	}
        
-
+/**
+ * parse a write statement
+ * @return the parsed write statement
+ * @throws SyntaxException
+ */
 	private NodeStmtWr parseWrStmt() throws SyntaxException {
 		NodeExpr exprToWrite = parseExpr();
 		return new NodeStmtWr(pos(), exprToWrite);
 	}
-
+/**
+ * parse a boolean expression
+ * @return the parsed boolean expression
+ * @throws SyntaxException
+ */
 	private NodeBoolExpr parseBoolExpr() throws SyntaxException {
 		NodeExpr expr1 = parseExpr();
 		NodeRelop op = parseRelop();
@@ -186,7 +203,11 @@ public class Parser {
 		
 		return new NodeBoolExpr(expr1, op, expr2);
 	}
-
+/**
+ * parse a while statement
+ * @return the parsed while statement
+ * @throws SyntaxException
+ */
 	private NodeStmtWhile parseWhileStmt() throws SyntaxException {
 		NodeBoolExpr boolExpr = parseBoolExpr();
 		match("do");
@@ -195,7 +216,11 @@ public class Parser {
 		return new NodeStmtWhile(boolExpr, stmt);
 		
 	}
-
+/**
+ * parse an if statement, including an optional else block
+ * @return the parsed if statement
+ * @throws SyntaxException
+ */
 	private NodeStmtIf parseIfStmt() throws SyntaxException {
 		NodeBoolExpr boolExpr = parseBoolExpr();
 		match("then");
