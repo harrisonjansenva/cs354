@@ -7,6 +7,7 @@ type AccountInterface interface {
 	Deposit(amnt float32) 
 	Withdraw(amnt float32)
 	Accrue(rate float32)
+	String() string
 
 }
 
