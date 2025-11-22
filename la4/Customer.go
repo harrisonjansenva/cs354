@@ -1,10 +1,11 @@
 package bank
+
 type Customer struct {
 	name string
 }
 
 func newCustomer(name string) *Customer {
-	return &Customer {
+	return &Customer{
 		name: name,
 	}
 }

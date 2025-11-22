@@ -11,13 +11,7 @@ type SavingsAccount struct {
 
 func NewSavingsAccount(name string, number string, balance float32) *SavingsAccount {
 	return &SavingsAccount{
-		Account: Account {
-			customer: Customer {
-				name: name,
-			},
-			number: number,
-			balance: balance,
-		},
+		Account:  *NewAccount(name, number, balance),
 		interest: 0,
 	}
 }

@@ -10,12 +10,6 @@ type CheckingAccount struct {
 
 func NewCheckingAccount(name string, number string, balance float32) *CheckingAccount {
 	return &CheckingAccount{
-		Account: Account{
-			customer: Customer{
-				name: name,
-			},
-			number:  number,
-			balance: balance,
-		},
+		Account: *NewAccount(name, number, balance),
 	}
 }
