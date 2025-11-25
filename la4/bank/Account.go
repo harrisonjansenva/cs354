@@ -24,9 +24,6 @@ func NewAccount(name string, number string, balance float64) *Account {
 	}
 }
 
-// func (a *Account) Customer() string {
-// 	return a.customer.String()
-// }
 
 func (acct *Account) Balance() float64 {
 	return acct.balance
