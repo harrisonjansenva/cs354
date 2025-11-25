@@ -4,7 +4,7 @@ type Customer struct {
 	name string
 }
 
-func newCustomer(name string) *Customer {
+func NewCustomer(name string) *Customer {
 	return &Customer{
 		name: name,
 	}
