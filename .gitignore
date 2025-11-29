@@ -9,3 +9,4 @@ inp
 ta1/.idea/vcs.xml
 ta2/*.class
 *.tar
+/language_website/coq_examples/
