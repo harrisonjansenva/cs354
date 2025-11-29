@@ -237,223 +237,255 @@
 <body>
     <div class="container">
         <header>
-            <h1>Coq</h1>
-            <!-- <img src="coqLogo.png" alt="Coq Logo" style="width:200px; margin:10px 0;"> -->
+            <h1>Coq (Rocq)</h1>
+            <p class="tagline">The Interactive Theorem Prover</p>
         </header>
 
-        <!-- Section 1: Description and History -->
         <section id="description">
             <h2>Description & History</h2>
             
             <h3>Overview</h3>
             <div class="placeholder">
-                Add a comprehensive description of the programming language here. Include its paradigm (object-oriented, functional, procedural, etc.), primary use cases, key features, and what makes it unique or notable.
+                Coq (recently renamed <strong>Rocq</strong> in 2025) is a formal proof management system and a functional programming language. It provides a rich environment for the interactive development of machine-checked formal reasoning.<br><br>
+                <strong>Paradigm:</strong> Pure Functional, Dependently Typed, Interactive Theorem Prover.<br>
+                <strong>Primary Use Cases:</strong> Modeling programming languages, certifying software and hardware (e.g., CompCert compiler), and formalizing mathematics (e.g., 4-Color Theorem, Feit-Thompson Theorem).<br>
+                <strong>Key Features:</strong>
+                <ul>
+                    <li><strong>Calculus of Constructions (CoC):</strong> A higher-order logic that serves as the foundation.</li>
+                    <li><strong>Gallina:</strong> The native functional specification language of Coq.</li>
+                    <li><strong>Extraction:</strong> Ability to extract certified programs to OCaml, Haskell, and Scheme.</li>
+                    <li><strong>Tactics:</strong> Powerful tools for constructing complex proofs semi-automatically.</li>
+                </ul>
             </div>
 
             <h3>Historical Timeline</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-year">[Year]</div>
-                    <div class="placeholder">First milestone or creation event</div>
+                    <div class="timeline-year">1983</div>
+                    <div class="placeholder">Development begins at INRIA, based on the Calculus of Constructions (CoC).</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-year">[Year]</div>
-                    <div class="placeholder">Major version or significant development</div>
+                    <div class="timeline-year">1989</div>
+                    <div class="placeholder">Release of Coq V1 (implied by "development since 1983" and standard history).</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-year">[Year]</div>
-                    <div class="placeholder">Another important milestone</div>
+                    <div class="timeline-year">2005</div>
+                    <div class="placeholder">Formal verification of the Four Color Theorem using Coq (Major milestone mentioned in source).</div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-year">[Year]</div>
-                    <div class="placeholder">Current status or recent development</div>
+                    <div class="timeline-year">2025</div>
+                    <div class="placeholder"><strong>Renamed to Rocq:</strong> Honors Inria Rocquencourt (original development site) and the "Roc" bird.</div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: Documentation and Resources -->
         <section id="resources">
             <h2>Documentation & Resources</h2>
             
             <div class="links-grid">
                 <div class="link-card">
+                    <h4>Official Website</h4>
+                    <div class="placeholder">
+                        Official Home of the Rocq Prover<br>
+                        <strong>URL:</strong> <a href="https://rocq-prover.org">https://rocq-prover.org</a>
+                    </div>
+                </div>
+                
+                <div class="link-card">
                     <h4>Official Documentation</h4>
                     <div class="placeholder">
-                        Link to official docs<br>
-                        <strong>URL:</strong> [Add URL here]
+                        Language Manual & Reference<br>
+                        <strong>URL:</strong> <a href="https://coq.inria.fr/refman/">https://coq.inria.fr/refman/</a>
                     </div>
                 </div>
                 
                 <div class="link-card">
-                    <h4>Language Manual</h4>
+                    <h4>Interactive Textbook</h4>
                     <div class="placeholder">
-                        Link to language manual or reference<br>
-                        <strong>URL:</strong> [Add URL here]
-                    </div>
-                </div>
-                
-                <div class="link-card">
-                    <h4>Beginner Tutorials</h4>
-                    <div class="placeholder">
-                        Link to getting started guides<br>
-                        <strong>URL:</strong> [Add URL here]
-                    </div>
-                </div>
-                
-                <div class="link-card">
-                    <h4>Advanced Resources</h4>
-                    <div class="placeholder">
-                        Link to advanced tutorials<br>
-                        <strong>URL:</strong> [Add URL here]
+                        Software Foundations (Volume 1: Logical Foundations)<br>
+                        <strong>URL:</strong> <a href="https://softwarefoundations.cis.upenn.edu/lf-current/toc.html">https://softwarefoundations.cis.upenn.edu</a>
                     </div>
                 </div>
                 
                 <div class="link-card">
                     <h4>Community Forum</h4>
                     <div class="placeholder">
-                        Link to community resources<br>
-                        <strong>URL:</strong> [Add URL here]
-                    </div>
-                </div>
-                
-                <div class="link-card">
-                    <h4>API Reference</h4>
-                    <div class="placeholder">
-                        Link to API documentation<br>
-                        <strong>URL:</strong> [Add URL here]
+                        Coq Zulip Chat / Discourse<br>
+                        <strong>URL:</strong> <a href="https://coq.zulipchat.com/">https://coq.zulipchat.com/</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Translators and Installation -->
         <section id="installation">
             <h2>Translators & Installation</h2>
             
             <h3>Available Translators/Compilers</h3>
             <div class="placeholder">
-                List the available compilers, interpreters, or translators for this language (e.g., GCC for C, CPython for Python, OpenJDK for Java, etc.)
+                Coq programs (written in Gallina) can be executed directly within the system using the `Compute` command. For high-performance execution, they are typically <strong>extracted</strong> to:
+                <ul>
+                    <li><strong>OCaml</strong> (Primary target)</li>
+                    <li><strong>Haskell</strong></li>
+                    <li><strong>Scheme</strong></li>
+                </ul>
             </div>
 
             <h3>Installation Instructions</h3>
             
-            <h4>Windows</h4>
+            <h4>Recommended (All Platforms)</h4>
             <ol class="install-steps">
-                <li><div class="placeholder">First installation step for Windows</div></li>
-                <li><div class="placeholder">Second installation step for Windows</div></li>
-                <li><div class="placeholder">Verification step for Windows</div></li>
+                <li><div class="placeholder">Install <strong>Docker</strong> from docker.com.</div></li>
+                <li><div class="placeholder">Install <strong>VSCode</strong> and the "Dev Containers" extension.</div></li>
+                <li><div class="placeholder">Open the Software Foundations folder in VSCode; it will automatically set up the Rocq environment.</div></li>
             </ol>
 
-            <h4>macOS</h4>
+            <h4>Windows / macOS / Linux (Native)</h4>
             <ol class="install-steps">
-                <li><div class="placeholder">First installation step for macOS</div></li>
-                <li><div class="placeholder">Second installation step for macOS</div></li>
-                <li><div class="placeholder">Verification step for macOS</div></li>
-            </ol>
-
-            <h4>Linux</h4>
-            <ol class="install-steps">
-                <li><div class="placeholder">First installation step for Linux</div></li>
-                <li><div class="placeholder">Second installation step for Linux</div></li>
-                <li><div class="placeholder">Verification step for Linux</div></li>
+                <li><div class="placeholder">Download the <strong>Rocq Platform</strong> installer from <a href="https://rocq-prover.org/install">rocq-prover.org/install</a>.</div></li>
+                <li><div class="placeholder">Run the installer. This includes the compiler and the <strong>CoqIDE</strong> editor.</div></li>
+                <li><div class="placeholder">Verify by opening CoqIDE and running a simple command like `Check nat.`</div></li>
             </ol>
         </section>
 
-        <!-- Section 4: Introductory Examples -->
         <section id="intro-examples">
             <h2>Introductory Examples</h2>
             
-            <h3>Hello World</h3>
-            <div class="code-label">example.ext</div>
+            <h3>Variables and Types (Days of Week)</h3>
+            <div class="code-label">Basics.v</div>
             <div class="code-block">
-                <pre>[Insert Hello World code here]</pre>
+                <pre>
+Inductive day : Type :=
+  | monday
+  | tuesday
+  | wednesday
+  | thursday
+  | friday
+  | saturday
+  | sunday.
+
+Definition next_working_day (d:day) : day :=
+  match d with
+  | monday => tuesday
+  | tuesday => wednesday
+  | wednesday => thursday
+  | thursday => friday
+  | friday => monday
+  | saturday => monday
+  | sunday => monday
+  end.
+
+Compute (next_working_day friday).
+(* ==> monday : day *)
+                </pre>
             </div>
             
             <h4>Build/Run Instructions:</h4>
             <div class="code-block">
-                <pre>[Insert build command here]
-[Insert run command here]</pre>
+                <pre>
+# Run interactively in CoqIDE or VSCode (Ctrl+Alt+Down)
+# Or compile via command line:
+rocq compile -Q . LF Basics.v
+                </pre>
             </div>
             
             <div class="placeholder">
                 <strong>Expected Output:</strong><br>
-                [Describe what the output should be]
+                The `Compute` command outputs: `monday : day`
             </div>
 
-            <h3>Basic Variables and Types</h3>
-            <div class="code-label">variables.ext</div>
+            <h3>Recursion (Factorial/Sum)</h3>
+            <div class="code-label">Basics.v</div>
             <div class="code-block">
-                <pre>[Insert code demonstrating variables and basic types]</pre>
-            </div>
-            
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>[Insert build/run commands here]</pre>
-            </div>
+                <pre>
+Fixpoint plus (n : nat) (m : nat) : nat :=
+  match n with
+  | O => m
+  | S n' => S (plus n' m)
+  end.
 
-            <h3>Control Structures</h3>
-            <div class="code-label">control.ext</div>
-            <div class="code-block">
-                <pre>[Insert code demonstrating if/else, loops, etc.]</pre>
-            </div>
-            
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>[Insert build/run commands here]</pre>
+Compute (plus 3 2).
+(* ==> 5 : nat *)
+                </pre>
             </div>
         </section>
 
-        <!-- Section 5: Complex Examples -->
         <section id="complex-examples">
             <h2>Complex Example Programs</h2>
             
-            <h3>Example 1: [Program Name/Purpose]</h3>
+            <h3>Example 1: Inductively Defined Propositions (Collatz)</h3>
             <div class="placeholder">
-                Brief description of what this program does and what concepts it demonstrates.
+                Demonstrates defining mathematical properties using inductive rules. Here we define the Collatz property: a number eventually reaches 1.
             </div>
-            <div class="code-label">complex_example1.ext</div>
+            <div class="code-label">IndProp.v</div>
             <div class="code-block">
-                <pre>[Insert complex code example here - could be a data structure implementation,
-algorithm, or multi-file program]</pre>
-            </div>
-            
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>[Insert build commands here]
-[Insert run commands here]
-[Include any dependencies or setup needed]</pre>
+                <pre>
+Inductive Collatz_holds_for : nat -> Prop :=
+  | Chf_one : Collatz_holds_for 1
+  | Chf_even (n : nat) : even n = true ->
+      Collatz_holds_for (div2 n) ->
+      Collatz_holds_for n
+  | Chf_odd (n : nat) : even n = false ->
+      Collatz_holds_for ((3 * n) + 1) ->
+      Collatz_holds_for n.
+                </pre>
             </div>
 
-            <h3>Example 2: [Program Name/Purpose]</h3>
+            <h3>Example 2: Abstract Syntax Tree (Imp Language)</h3>
             <div class="placeholder">
-                Brief description of what this program does and what concepts it demonstrates.
+                Defining the syntax of a simple imperative language ("Imp") as a data structure. This is a common use case: embedding languages within Coq.
             </div>
-            <div class="code-label">complex_example2.ext</div>
+            <div class="code-label">Imp.v</div>
             <div class="code-block">
-                <pre>[Insert another complex code example here]</pre>
-            </div>
-            
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>[Insert build/run commands here]</pre>
+                <pre>
+Inductive aexp : Type :=
+  | ANum (n : nat)
+  | APlus (a1 a2 : aexp)
+  | AMinus (a1 a2 : aexp)
+  | AMult (a1 a2 : aexp).
+
+Fixpoint aeval (a : aexp) : nat :=
+  match a with
+  | ANum n => n
+  | APlus a1 a2 => (aeval a1) + (aeval a2)
+  | AMinus a1 a2 => (aeval a1) - (aeval a2)
+  | AMult a1 a2 => (aeval a1) * (aeval a2)
+  end.
+                </pre>
             </div>
 
-            <h3>Example 3: [Program Name/Purpose]</h3>
+            <h3>Example 3: Verifying Optimization (The "Prover" Aspect)</h3>
             <div class="placeholder">
-                Brief description of what this program does and what concepts it demonstrates.
+                Proving that an optimization (removing "0 + x") is mathematically correct for <em>all</em> possible inputs.
             </div>
-            <div class="code-label">complex_example3.ext</div>
+            <div class="code-label">Imp.v</div>
             <div class="code-block">
-                <pre>[Insert another complex code example here]</pre>
-            </div>
-            
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>[Insert build/run commands here]</pre>
+                <pre>
+Fixpoint optimize_0plus (a:aexp) : aexp :=
+  match a with
+  | ANum n => ANum n
+  | APlus (ANum 0) e2 => optimize_0plus e2
+  | APlus e1 e2 => APlus (optimize_0plus e1) (optimize_0plus e2)
+  (* ... other cases omitted ... *)
+  end.
+
+(* The Theorem Statement *)
+Theorem optimize_0plus_sound: forall a,
+  aeval (optimize_0plus a) = aeval a.
+
+(* The Proof Script *)
+Proof.
+  intros a. induction a.
+  - (* ANum *) reflexivity.
+  - (* APlus *) destruct a1.
+    + destruct n.
+      * simpl. apply IHa2. (* 0 + x case *)
+      * simpl. rewrite IHa2. reflexivity.
+    + (* ... remaining steps ... *)
+Qed.
+                </pre>
             </div>
         </section>
 
-        <!-- Section 6: Language Comparison -->
         <section id="comparison">
             <h2>Language Comparison</h2>
             
@@ -461,96 +493,61 @@ algorithm, or multi-file program]</pre>
                 <thead>
                     <tr>
                         <th>Feature/Characteristic</th>
-                        <th>[This Language]</th>
-                        <th>[Language 1]</th>
-                        <th>[Language 2]</th>
-                        <th>[Language 3]</th>
+                        <th>Coq (Rocq)</th>
+                        <th>Haskell</th>
+                        <th>Java</th>
+                        <th>Python</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>Paradigm</strong></td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>Proof Assistant / Pure Functional</td>
+                        <td>Pure Functional</td>
+                        <td>Object-Oriented</td>
+                        <td>Multi-paradigm</td>
                     </tr>
                     <tr>
                         <td><strong>Typing</strong></td>
-                        <td>[Static/Dynamic/Strong/Weak]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>Static, Dependently Typed</td>
+                        <td>Static, Strong</td>
+                        <td>Static, Strong</td>
+                        <td>Dynamic</td>
                     </tr>
                     <tr>
                         <td><strong>Memory Management</strong></td>
-                        <td>[Manual/Garbage Collection/Other]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>Extraction (GC via OCaml/Haskell)</td>
+                        <td>Garbage Collection</td>
+                        <td>Garbage Collection</td>
+                        <td>Garbage Collection</td>
                     </tr>
                     <tr>
                         <td><strong>Compilation</strong></td>
-                        <td>[Compiled/Interpreted/JIT/Hybrid]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>Bytecode / Transpilation</td>
+                        <td>Compiled (GHC)</td>
+                        <td>Bytecode (JVM)</td>
+                        <td>Interpreted</td>
                     </tr>
                     <tr>
-                        <td><strong>Concurrency Support</strong></td>
-                        <td>[Threading model/Async support]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td><strong>Concurrency</strong></td>
+                        <td>Via extraction (simpler behavior)</td>
+                        <td>Strong (STM, Green threads)</td>
+                        <td>Threads / Locks</td>
+                        <td>GIL limited</td>
                     </tr>
                     <tr>
                         <td><strong>Performance</strong></td>
-                        <td>[High/Medium/Low]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Learning Curve</strong></td>
-                        <td>[Easy/Medium/Difficult]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>High (via Extraction)</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Low/Medium</td>
                     </tr>
                     <tr>
                         <td><strong>Primary Use Cases</strong></td>
-                        <td>[Web/Systems/Data Science/etc.]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Standard Library</strong></td>
-                        <td>[Extensive/Moderate/Minimal]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Package Ecosystem</strong></td>
-                        <td>[Size/Quality assessment]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Community Size</strong></td>
-                        <td>[Large/Medium/Small]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Platform Support</strong></td>
-                        <td>[Cross-platform/Specific platforms]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
-                        <td>[Fill in]</td>
+                        <td>Formal Verification, Math Proofs</td>
+                        <td>Systems, Web, Data</td>
+                        <td>Enterprise, Web, Mobile</td>
+                        <td>Data Science, Web, Scripting</td>
                     </tr>
                 </tbody>
             </table>
