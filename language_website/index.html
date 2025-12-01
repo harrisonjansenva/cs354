@@ -344,6 +344,14 @@
                             href="https://rocq-prover.zulipchat.com">https://rocq-prover.zulipchat.com</a>
                     </div>
                 </div>
+                <div class="link-card">
+                    <div class="placeholder">
+                        <h4>CompCert C Compiler</h4>
+                        C Compiler written in Coq to guarantee program behavior<br>
+                        <strong>URL:</strong> <a href="https://compcert.org/doc/">https://compcert.org/doc/</a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -370,7 +378,8 @@
                 </li>
                 <li>
                     <div class="placeholder">Run the installer. This includes the compiler and the
-                        <strong>CoqIDE</strong> editor.</div>
+                        <strong>CoqIDE</strong> editor.
+                    </div>
                 </li>
                 <li>
                     <div class="placeholder">Verify by opening CoqIDE and running a simple command like `Check nat.`
@@ -395,13 +404,50 @@
 
         </section>
 
-        <section id="intro-examples">
-            <h2>Introductory Examples</h2>
+        <section id="compcert">
+            <h2>Real-World Application: CompCert</h2>
 
-            <h3>Variables and Types (Days of Week)</h3>
-            <div class="code-label">Basics.v</div>
-            <div class="code-block">
-                <pre>
+            <div class="placeholder">
+                <strong>CompCert</strong> is a formally verified C compiler developed using Coq, representing one of the
+                most significant achievements in software verification. Unlike traditional compilers that may contain
+                bugs leading to incorrect optimizations or code generation errors, CompCert comes with a mathematical
+                proof that the generated assembly code behaves exactly as specified by the C source code.
+            </div>
+
+            <h3>Why CompCert Matters</h3>
+            <div class="placeholder">
+                <ul>
+                    <li><strong>Correctness Guarantee:</strong> CompCert's formal proof ensures that compilation
+                        preserves program semantics. If your C program has a certain behavior, the compiled code will
+                        have that exact behavior.</li>
+                    <li><strong>Safety-Critical Systems:</strong> Used in aerospace, automotive, and medical devices
+                        where compiler bugs could have catastrophic consequences.</li>
+                    <li><strong>Research Impact:</strong> Demonstrated that large-scale software verification is
+                        practical, inspiring similar projects for operating systems, cryptographic implementations, and
+                        more.</li>
+                </ul>
+            </div>
+
+            <h3>Technical Achievement</h3>
+            <div class="placeholder">
+                The CompCert project consists of over 100,000 lines of Coq proofs covering all compilation passes:
+                parsing, optimization, register allocation, and assembly generation. This represents years of work
+                proving that each transformation step is semantically equivalent to the original program.
+            </div>
+        </section>
+
+        <section id="Examples">
+            <h2>Language Examples</h2>
+
+            <table>
+
+                <section id="intro-examples">
+                    <h2>Introductory Examples</h2>
+
+                    <h3>Variables and Types (Days of Week)</h3>
+                    <div class="code-label">Basics.v</div>
+                    <div class="code-block">
+                        <pre>
 Inductive day : Type :=
   | monday
   | tuesday
@@ -425,46 +471,46 @@ Definition next_working_day (d:day) : day :=
 Compute (next_working_day friday).
 (* ==> monday : day *)
                 </pre>
-            </div>
+                    </div>
 
-            <h4>Build/Run Instructions:</h4>
-            <div class="code-block">
-                <pre>
+                    <h4>Build/Run Instructions:</h4>
+                    <div class="code-block">
+                        <pre>
 # Run interactively in CoqIDE or VSCode (Ctrl+Alt+Down)
 # Or compile via command line:
 rocq compile -Q . LF Basics.v
                 </pre>
-            </div>
+                    </div>
 
-            <div class="placeholder">
-                <strong>Expected Output:</strong><br>
-                The `Compute` command outputs: `monday : day`
-            </div>
+                    <div class="placeholder">
+                        <strong>Expected Output:</strong><br>
+                        The `Compute` command outputs: `monday : day`
+                    </div>
 
-            <h3>Recursion (Factorial/Sum)</h3>
-            <div class="code-label">Basics.v</div>
-            <div class="code-block">
-                <pre>
+                    <h3>Recursion (Factorial/Sum)</h3>
+                    <div class="code-label">Basics.v</div>
+                    <div class="code-block">
+                        <pre>
 Fixpoint plus (n : nat) (m : nat) : nat :=
   match n with
   | O => m
   | S n' => S (plus n' m)
   end.
                 </pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section id="complex-examples">
-            <h2>Complex Example Programs</h2>
+                <section id="complex-examples">
+                    <h2>Complex Example Programs</h2>
 
-            <h3>Example 1: Inductively Defined Propositions (Collatz)</h3>
-            <div class="placeholder">
-                Demonstrates defining mathematical properties using inductive rules. Here we define the Collatz
-                property: a number eventually reaches 1.
-            </div>
-            <div class="code-label">IndProp.v</div>
-            <div class="code-block">
-                <pre>
+                    <h3>Example 1: Inductively Defined Propositions (Collatz)</h3>
+                    <div class="placeholder">
+                        Demonstrates defining mathematical properties using inductive rules. Here we define the Collatz
+                        property: a number eventually reaches 1.
+                    </div>
+                    <div class="code-label">IndProp.v</div>
+                    <div class="code-block">
+                        <pre>
 Require Import Coq.Arith.Arith.
 Inductive Collatz_holds_for : nat -> Prop :=
   | Chf_one : Collatz_holds_for 1
@@ -475,16 +521,17 @@ Inductive Collatz_holds_for : nat -> Prop :=
       Collatz_holds_for ((3 * n) + 1) ->
       Collatz_holds_for n.
                 </pre>
-            </div>
+                    </div>
 
-            <h3>Example 2: Abstract Syntax Tree (Imp Language)</h3>
-            <div class="placeholder">
-                Defining the syntax of a simple imperative language ("Imp") as a data structure. This is a common use
-                case: embedding languages within Coq.
-            </div>
-            <div class="code-label">Imp.v</div>
-            <div class="code-block">
-                <pre>
+                    <h3>Example 2: Abstract Syntax Tree (Imp Language)</h3>
+                    <div class="placeholder">
+                        Defining the syntax of a simple imperative language ("Imp") as a data structure. This is a
+                        common use
+                        case: embedding languages within Coq.
+                    </div>
+                    <div class="code-label">Imp.v</div>
+                    <div class="code-block">
+                        <pre>
 Inductive aexp : Type :=
   | ANum (n : nat)
   | APlus (a1 a2 : aexp)
@@ -499,16 +546,17 @@ Fixpoint aeval (a : aexp) : nat :=
   | AMult a1 a2 => (aeval a1) * (aeval a2)
   end.
                 </pre>
-            </div>
+                    </div>
 
-            <h3>Example 3: Verifying Optimization (The "Prover" Aspect)</h3>
-            <div class="placeholder">
-                Proving that an optimization (removing "0 + x") is mathematically correct for <em>all</em> possible
-                inputs.
-            </div>
-            <div class="code-label">Imp.v</div>
-            <div class="code-block">
-                <pre>
+                    <h3>Example 3: Verifying Optimization (The "Prover" Aspect)</h3>
+                    <div class="placeholder">
+                        Proving that an optimization (removing "0 + x") is mathematically correct for <em>all</em>
+                        possible
+                        inputs.
+                    </div>
+                    <div class="code-label">Imp.v</div>
+                    <div class="code-block">
+                        <pre>
 Fixpoint optimize_0plus (a:aexp) : aexp :=
   match a with
   | ANum n => ANum n
@@ -554,75 +602,75 @@ Proof.
     simpl in *. rewrite IHa1. rewrite IHa2. reflexivity.
 Qed.
                 </pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section id="comparison">
-            <h2>Language Comparison</h2>
+                <section id="comparison">
+                    <h2>Language Comparison</h2>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature/Characteristic</th>
-                        <th>Coq (Rocq)</th>
-                        <th>Haskell</th>
-                        <th>Java</th>
-                        <th>Python</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Paradigm</strong></td>
-                        <td>Proof Assistant / Pure Functional</td>
-                        <td>Pure Functional</td>
-                        <td>Object-Oriented</td>
-                        <td>Multi-paradigm</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Typing</strong></td>
-                        <td>Static, Dependently Typed</td>
-                        <td>Static, Strong</td>
-                        <td>Static, Strong</td>
-                        <td>Dynamic</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Memory Management</strong></td>
-                        <td>Extraction (GC via OCaml/Haskell)</td>
-                        <td>Garbage Collection</td>
-                        <td>Garbage Collection</td>
-                        <td>Garbage Collection</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Compilation</strong></td>
-                        <td>Bytecode / Transpilation</td>
-                        <td>Compiled (GHC)</td>
-                        <td>Bytecode (JVM)</td>
-                        <td>Interpreted</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Concurrency</strong></td>
-                        <td>Via extraction (simpler behavior)</td>
-                        <td>Strong (STM, Green threads)</td>
-                        <td>Threads / Locks</td>
-                        <td>GIL limited</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Performance</strong></td>
-                        <td>High (via Extraction)</td>
-                        <td>High</td>
-                        <td>High</td>
-                        <td>Low/Medium</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Primary Use Cases</strong></td>
-                        <td>Formal Verification, Math Proofs</td>
-                        <td>Systems, Web, Data</td>
-                        <td>Enterprise, Web, Mobile</td>
-                        <td>Data Science, Web, Scripting</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature/Characteristic</th>
+                                <th>Coq (Rocq)</th>
+                                <th>Haskell</th>
+                                <th>Java</th>
+                                <th>Python</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Paradigm</strong></td>
+                                <td>Proof Assistant / Pure Functional</td>
+                                <td>Pure Functional</td>
+                                <td>Object-Oriented</td>
+                                <td>Multi-paradigm</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Typing</strong></td>
+                                <td>Static, Dependently Typed</td>
+                                <td>Static, Strong</td>
+                                <td>Static, Strong</td>
+                                <td>Dynamic</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memory Management</strong></td>
+                                <td>Extraction (GC via OCaml/Haskell)</td>
+                                <td>Garbage Collection</td>
+                                <td>Garbage Collection</td>
+                                <td>Garbage Collection</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Compilation</strong></td>
+                                <td>Bytecode / Transpilation</td>
+                                <td>Compiled (GHC)</td>
+                                <td>Bytecode (JVM)</td>
+                                <td>Interpreted</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Concurrency</strong></td>
+                                <td>Via extraction (simpler behavior)</td>
+                                <td>Strong (STM, Green threads)</td>
+                                <td>Threads / Locks</td>
+                                <td>GIL limited</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance</strong></td>
+                                <td>High (via Extraction)</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Low/Medium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Primary Use Cases</strong></td>
+                                <td>Formal Verification, Math Proofs</td>
+                                <td>Systems, Web, Data</td>
+                                <td>Enterprise, Web, Mobile</td>
+                                <td>Data Science, Web, Scripting</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
     </div>
 </body>
 
