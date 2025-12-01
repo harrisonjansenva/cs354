@@ -736,7 +736,7 @@ Proof.
         { 
            destruct (delta_star start_state (rev r')); simpl in H; discriminate.
         }
-        (* Case x=0, y=0 (Ends in 10) *)
+        (* Case x=0, y=0 (Ends in 01) *)
         {
            exists (rev r').
            apply H_struct.
