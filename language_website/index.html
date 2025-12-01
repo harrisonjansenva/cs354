@@ -669,9 +669,8 @@ Qed.
                 </pre>
                     </div>
                     <div class="placeholder">
-                        Part 3: Proving that all strings that are accepted are accepted because they end in '01'.
+                        Part 3: Completeness Part 1: Show that the end of the string cannot be empty.
                     </div>
-                    <div class="code-label">DFA_Proof.v</div>
                     <div class="code-block">
                         <pre>
 Lemma ends_with_01 :
@@ -690,7 +689,6 @@ Proof.
       simpl in H. destruct a; discriminate.
 
     + (* Case w has length >= 2 *)
-      (* We look at the reversed list to easily peel off the last items *)
       destruct (rev (a :: b :: w2)) as [ | y r ] eqn:Hr.
       
       (* --- Sub-proof 1: Reversed list cannot be empty --- *)
@@ -708,11 +706,6 @@ Proof.
           rewrite rev_length in L. simpl in L. lia.
         }
         
-        (* Case: The list has at least 2 items (x and y) *)
-        (* This effectively means w ends in ...xy *)
-        
-        (* 1. Reconstruct w in terms of x and y *)
-        (* If rev w = y :: x :: r', then w = rev r' ++ [x; y] *)
        (* 1. Reconstruct w in terms of x and y *)
         assert (H_struct: a :: b :: w2 = rev r' ++ (x :: y :: nil)).
         {
@@ -731,42 +724,40 @@ Proof.
         rewrite H_struct in H.
         rewrite delta_star_app in H.
         simpl in H.
-        
+                            </pre>
+                    </div>
+                    <div class="placeholder">Part 4: Completeness Part 2: Prove that if a string is accepted, it is because it ends in 01.</div>
+                    <div class="code-block">
+                        <pre>
         (* 3. Analyze the last two transitions *)
-        (* We know delta_star ( ... ) ends in S2. *)
-        (* Let's see which inputs x, y could possibly result in S2 *)
         destruct x, y.
         
         (* Case x=O, y=O (Ends in 00) *)
-        (* delta(delta q O) O always goes to S1. S1 <> S2. *)
         { 
            destruct (delta_star start_state (rev r')); simpl in H; discriminate.
         }
-
-        (* Case x=O, y=I (Ends in 01) -> THIS IS THE WINNER *)
+        (* Case x=0, y=0 (Ends in 10) *)
         {
            exists (rev r').
            apply H_struct.
         }
 
         (* Case x=I, y=O (Ends in 10) *)
-        (* delta(delta q I) O always goes to S1. S1 <> S2. *)
         {
            destruct (delta_star start_state (rev r')); simpl in H; discriminate.
         }
 
         (* Case x=I, y=I (Ends in 11) *)
-        (* With our NEW delta, this goes to S0. S0 <> S2. *)
         {
-           (* We must check the previous state q to be sure *)
            destruct (delta_star start_state (rev r')); simpl in H.
            - discriminate. (* S0 -> S0 -> S0 *)
            - discriminate. (* S1 -> S2 -> S0 (Using the fixed delta!) *)
            - discriminate. (* S2 -> S0 -> S0 *)
         }
 Qed.
-                            </pre>
+                        </pre>
                     </div>
+
 
                 </section>
 
