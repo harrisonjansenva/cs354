@@ -337,14 +337,6 @@
                 </div>
 
                 <div class="link-card">
-                    <h4>Community Forum</h4>
-                    <div class="placeholder">
-                        Coq Zulip Chat / Discourse<br>
-                        <strong>URL:</strong> <a
-                            href="https://rocq-prover.zulipchat.com">https://rocq-prover.zulipchat.com</a>
-                    </div>
-                </div>
-                <div class="link-card">
                     <div class="placeholder">
                         <h4>CompCert C Compiler</h4>
                         C Compiler written in Coq to guarantee program behavior<br>
@@ -603,6 +595,179 @@ Proof.
 Qed.
                 </pre>
                     </div>
+
+                </section>
+                <section id="complex-examples">
+                    <h2>Challenge Problem</h2>
+
+                    <h3>Proving The Correctness of a DFA</h3>
+                    <div class="placeholder">
+                        Part 1: Introducing the DFA, its states, and its transitions.
+                    </div>
+                    <div class="code-label">DFA_Proof.v</div>
+                    <div class="code-block">
+                        <pre>
+Require Import List. (* Import standard library for lists *)
+Require Import Lia.
+Open Scope list_scope.
+
+Inductive sym : Type := O | I.
+
+Inductive state : Type := S0 | S1 | S2.
+
+Definition start_state : state := S0.
+
+Definition is_final (s : state) : Prop := s = S2.
+
+Definition delta (s : state) (a : sym) : state :=
+  match s, a with
+  | S0, O => S1
+  | S0, I => S0
+  | S1, O => S1
+  | S1, I => S2
+  | S2, O => S1
+  | S2, I => S0
+  end.
+
+Fixpoint delta_star (s : state) (w : list sym) : state :=
+  match w with
+  | nil => s
+  | a :: w' => delta_star (delta s a) w'
+  end.
+  </pre>
+                    </div>
+                    <div class="placeholder">
+                        Part 2: Prove Soundness: All strings in our alphabet that end in '01' are accepted.
+                    </div>
+                    <div class="code-block">
+                        <pre>
+Lemma delta_star_01_is_S2 : forall s, delta_star s (O :: I :: nil) = S2.
+Proof.
+  destruct s; reflexivity.
+Qed.
+
+  
+Lemma delta_star_app : forall (q : state) (w1 w2 : list sym),
+  delta_star q (w1 ++ w2) = delta_star (delta_star q w1) w2.
+Proof.
+  intros q w1 w2.
+  generalize dependent q.
+  induction w1; intros q; simpl.
+  - reflexivity.
+  - rewrite IHw1. 
+  reflexivity.
+Qed.
+
+Theorem part1_completeness : forall (prefix : list sym),
+  delta_star start_state (prefix ++ (O :: (I :: nil))) = S2.
+Proof.
+  intros prefix.
+  rewrite delta_star_app.
+  apply delta_star_01_is_S2.
+Qed.
+
+                </pre>
+                    </div>
+                    <div class="placeholder">
+                        Part 3: Proving that all strings that are accepted are accepted because they end in '01'.
+                    </div>
+                    <div class="code-label">DFA_Proof.v</div>
+                    <div class="code-block">
+                        <pre>
+Lemma ends_with_01 :
+  forall w,
+    delta_star start_state w = S2 ->
+    exists alpha, w = alpha ++ (O :: I :: nil).
+Proof.
+  intros w H.
+  destruct w as [ | a w1 ].
+  - (* Case w is empty *)
+    simpl in H. discriminate.
+
+  - (* Case w is non empty *)
+    destruct w1 as [ | b w2 ].
+    + (* Case w is length 1 *)
+      simpl in H. destruct a; discriminate.
+
+    + (* Case w has length >= 2 *)
+      (* We look at the reversed list to easily peel off the last items *)
+      destruct (rev (a :: b :: w2)) as [ | y r ] eqn:Hr.
+      
+      (* --- Sub-proof 1: Reversed list cannot be empty --- *)
+      * exfalso.
+        assert (L: length (rev (a :: b :: w2)) = length (@nil sym)).
+        { rewrite Hr. reflexivity. }
+        rewrite rev_length in L. simpl in L. discriminate.
+
+      (* --- Sub-proof 2: Reversed list has items --- *)
+      * destruct r as [ | x r' ].
+        (* Case: Reversed list has only 1 item (Impossible for length >= 2) *)
+        { 
+          assert (L: length (rev (a :: b :: w2)) = length (y :: nil)).
+          { rewrite Hr. reflexivity. }
+          rewrite rev_length in L. simpl in L. lia.
+        }
+        
+        (* Case: The list has at least 2 items (x and y) *)
+        (* This effectively means w ends in ...xy *)
+        
+        (* 1. Reconstruct w in terms of x and y *)
+        (* If rev w = y :: x :: r', then w = rev r' ++ [x; y] *)
+       (* 1. Reconstruct w in terms of x and y *)
+        assert (H_struct: a :: b :: w2 = rev r' ++ (x :: y :: nil)).
+        {
+          assert (Hrev_eq: rev (a :: b :: w2) = y :: x :: r'). { apply Hr. }
+          
+          apply f_equal with (f := @rev sym) in Hrev_eq.
+          
+          rewrite rev_involutive in Hrev_eq.
+          rewrite Hrev_eq.
+          simpl.
+          rewrite <- app_assoc. 
+          reflexivity.
+        }
+
+        (* 2. Plug this structure back into the main hypothesis H *)
+        rewrite H_struct in H.
+        rewrite delta_star_app in H.
+        simpl in H.
+        
+        (* 3. Analyze the last two transitions *)
+        (* We know delta_star ( ... ) ends in S2. *)
+        (* Let's see which inputs x, y could possibly result in S2 *)
+        destruct x, y.
+        
+        (* Case x=O, y=O (Ends in 00) *)
+        (* delta(delta q O) O always goes to S1. S1 <> S2. *)
+        { 
+           destruct (delta_star start_state (rev r')); simpl in H; discriminate.
+        }
+
+        (* Case x=O, y=I (Ends in 01) -> THIS IS THE WINNER *)
+        {
+           exists (rev r').
+           apply H_struct.
+        }
+
+        (* Case x=I, y=O (Ends in 10) *)
+        (* delta(delta q I) O always goes to S1. S1 <> S2. *)
+        {
+           destruct (delta_star start_state (rev r')); simpl in H; discriminate.
+        }
+
+        (* Case x=I, y=I (Ends in 11) *)
+        (* With our NEW delta, this goes to S0. S0 <> S2. *)
+        {
+           (* We must check the previous state q to be sure *)
+           destruct (delta_star start_state (rev r')); simpl in H.
+           - discriminate. (* S0 -> S0 -> S0 *)
+           - discriminate. (* S1 -> S2 -> S0 (Using the fixed delta!) *)
+           - discriminate. (* S2 -> S0 -> S0 *)
+        }
+Qed.
+                            </pre>
+                    </div>
+
                 </section>
 
                 <section id="comparison">
