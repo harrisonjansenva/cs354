@@ -751,7 +751,7 @@ Proof.
         {
            destruct (delta_star start_state (rev r')); simpl in H.
            - discriminate. (* S0 -> S0 -> S0 *)
-           - discriminate. (* S1 -> S2 -> S0 (Using the fixed delta!) *)
+           - discriminate. (* S1 -> S2 -> S0 *)
            - discriminate. (* S2 -> S0 -> S0 *)
         }
 Qed.
